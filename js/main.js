@@ -20,6 +20,6 @@ guestForm.addEventListener("submit", (e) => {
     .then((response) => response.blob())
     .then((blob) => {
       const objectUrl = URL.createObjectURL(blob);
-      window.open(objectUrl);
+      window.location.href = objectUrl;
     });
 });
