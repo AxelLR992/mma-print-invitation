@@ -8,8 +8,12 @@ guestForm.addEventListener("submit", (e) => {
   submitButton.innerHTML = "LOADING...";
   submitButton.disabled = true;
 
-  const firstName = document.getElementById("guest-form-first-name").value;
-  const lastName = document.getElementById("guest-form-last-name").value;
+  const firstName = document
+    .getElementById("guest-form-first-name")
+    .value.toUpperCase();
+  const lastName = document
+    .getElementById("guest-form-last-name")
+    .value.toUpperCase();
   const email = document.getElementById("guest-form-email").value;
 
   fetch("/services/printInvitation.php", {
@@ -23,14 +27,10 @@ guestForm.addEventListener("submit", (e) => {
       email,
     }),
   })
-    .then((response) => response.blob())
-    .then((blob) => {
-      blob.type = "application/pdf";
-      const objectUrl = URL.createObjectURL(blob, {
-        type: "application/pdf",
-      });
+    .then((response) => response.text())
+    .then((filePath) => {
       submitButton.innerHTML = "ENTER";
       submitButton.disabled = false;
-      window.location.href = objectUrl;
+      window.location.href = filePath;
     });
 });

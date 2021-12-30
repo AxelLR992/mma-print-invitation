@@ -32,4 +32,15 @@ $htmlContent = str_replace("{{logoRosie}}", $logoRosie, $htmlContent);
 
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($htmlContent);
-$mpdf->Output();
+
+$directory = __DIR__ . "/../files/";
+$filename = strtolower(str_replace(" ", "-", $firstName) . "-" . str_replace(" ", "-", $lastName) . ".pdf");
+
+if (!is_dir($directory)) {
+    mkdir($directory);
+}
+
+$mpdf->Output($directory . $filename, \Mpdf\Output\Destination::FILE);
+
+// Return file path
+echo "/files/" . $filename;
